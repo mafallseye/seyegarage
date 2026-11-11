@@ -1,7 +1,13 @@
--- SeyeGarage V1 : schéma PostgreSQL (Supabase)
+-- SeyeGarage V1 : schéma PostgreSQL (Neon)
+-- L'application identifie l'utilisateur connecté à chaque requête :
+--   select set_config('app.user_id', '<uuid de l'utilisateur>', true);  (dans la transaction)
 -- Un compte (email) -> plusieurs entreprises -> chacune son abonnement, ses clients, ses dossiers.
 
 create extension if not exists pgcrypto;
+
+create or replace function public.app_uid() returns uuid language sql stable as $$
+  select nullif(current_setting('app.user_id', true), '')::uuid
+$$;
 
 -- ============ Tables ============
 create table public.entreprises (
@@ -16,7 +22,7 @@ create table public.entreprises (
   logo_path text,
   marge_defaut numeric(5,2),               -- vide = aucune marge
   marge_sur_facture boolean not null default true,
-  cree_par uuid not null default auth.uid(),
+  cree_par uuid not null default public.app_uid(),
   cree_le timestamptz not null default now()
 );
 
@@ -99,7 +105,7 @@ create index on public.versements (dossier_id);
 -- ============ Fonctions d'accès ============
 create or replace function public.est_membre(eid uuid) returns boolean
 language sql stable security definer set search_path = public as $$
-  select exists (select 1 from public.membres where entreprise_id = eid and user_id = auth.uid());
+  select exists (select 1 from public.membres where entreprise_id = eid and user_id = public.app_uid());
 $$;
 
 -- abonnement en cours (essai ou payant) ? sinon : lecture seule
@@ -128,7 +134,7 @@ create trigger trg_apres_creation_entreprise after insert on public.entreprises
 -- Activation d'un abonnement payé (appelée uniquement par le serveur / webhook PayDunya)
 create or replace function public.activer_abonnement(p_token text) returns void
 language plpgsql security definer set search_path = public as $$
-declare p public.paiements; base date; jours integer;
+declare p public.paiements; base date;
 begin
   select * into p from public.paiements where paydunya_token = p_token for update;
   if not found or p.statut = 'paye' then return; end if;
@@ -140,7 +146,7 @@ begin
             case p.plan when 'annuel' then (base + interval '1 year')::date else (base + interval '1 month')::date end,
             p.montant);
 end $$;
-revoke all on function public.activer_abonnement(text) from public, anon, authenticated;
+revoke all on function public.activer_abonnement(text) from public;
 
 -- ============ Sécurité (RLS) ============
 alter table public.entreprises enable row level security;
@@ -153,8 +159,8 @@ alter table public.lignes      enable row level security;
 alter table public.versements  enable row level security;
 
 -- entreprises
-create policy ent_select on public.entreprises for select using (public.est_membre(id) or cree_par = auth.uid());
-create policy ent_insert on public.entreprises for insert with check (cree_par = auth.uid());
+create policy ent_select on public.entreprises for select using (public.est_membre(id) or cree_par = public.app_uid());
+create policy ent_insert on public.entreprises for insert with check (cree_par = public.app_uid());
 create policy ent_update on public.entreprises for update using (public.peut_ecrire(id)) with check (public.est_membre(id));
 -- membres / abonnements / paiements : lecture seule pour les membres (écritures par le serveur)
 create policy mem_select on public.membres     for select using (public.est_membre(entreprise_id));

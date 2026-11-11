@@ -11,7 +11,7 @@ Plateforme de facturation par abonnement pour garages, menuiseries et autres mé
 Développement : Maguette · Design : Safia · Relecture : Karim
 
 ## État
-- [x] Schéma de base de données PostgreSQL avec règles de sécurité (`supabase/001_schema.sql`), testé
+- [x] Base de données PostgreSQL (Neon, Frankfurt) avec règles de sécurité (`db/001_schema.sql`), testé
 - [ ] Application web (Next.js)
 - [ ] Génération PDF et export Excel
 - [ ] Paiement PayDunya
