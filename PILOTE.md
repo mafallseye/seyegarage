@@ -1,6 +1,6 @@
 # PILOTE : suivi du projet
 
-Mis à jour à chaque étape. Équipe : Maguette (développement), Safia (design), Karim (relecture).
+Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md` (relecture). Équipe : Maguette (développement), Safia (design), Karim (relecture).
 
 ## Où on en est
 | Brique | État |
@@ -10,7 +10,8 @@ Mis à jour à chaque étape. Équipe : Maguette (développement), Safia (design
 | Base Neon `seyegarage` (Frankfurt, offre gratuite) | Créée, schéma 001 appliqué |
 | Documents projet (CLAUDE, PRD, SPEC, SKILL, PILOTE) | Rédigés, à relire par Karim |
 | Application Next.js | À construire |
-| Maquettes (Safia) | À faire |
+| Design « Terre & Soleil » (Safia) | Brief rédigé (`DESIGN.md`), maquettes à faire |
+| Relecture (Karim) | Grille et premières remarques (`REVUE.md`), à traiter |
 | Connexion par email | À construire, service d'envoi à choisir |
 | PDF et export Excel | À construire |
 | PayDunya | Compte marchand en cours d'ouverture, intégration en V2 |
@@ -23,6 +24,8 @@ Mis à jour à chaque étape. Équipe : Maguette (développement), Safia (design
 - Connexion par email sans mot de passe.
 - Essai gratuit de 14 jours (confirmé) ; abonnement expiré = lecture seule + export Excel.
 - Thème PDF par défaut : classique.
+- Design du site : **Terre & Soleil** (terracotta, soleil, sable, brun café), préparé par Safia.
+- Karim relit tout et propose de meilleures versions (`REVUE.md`).
 
 ## Questions ouvertes
 - Hostinger Cloud propose-t-il les applications Node.js ? (vérifier dans hPanel)
@@ -32,13 +35,15 @@ Mis à jour à chaque étape. Équipe : Maguette (développement), Safia (design
 - Mentions légales, conditions d'utilisation, politique de confidentialité à rédiger.
 
 ## Prochaines étapes
-1. Autoriser l'installation de paquets dans l'environnement de développement (npm).
-2. Créer l'application Next.js, la connexion par email et la création d'entreprise.
-3. Écrans paramètres, clients, dossiers.
-4. PDF (reprise de la logique existante) et export Excel.
-5. Tests d'isolation et de calcul (voir `SPEC.md`).
-6. Essai avec le frère de l'utilisateur, puis 2 à 3 garages.
-7. V2 : PayDunya, rappels, expiration.
+1. Traiter les 8 remarques de `REVUE.md` (en premier : rôle de connexion sans contournement de la RLS, quantités décimales).
+2. Safia livre la planche de style et les maquettes mobiles.
+3. Autoriser l'installation de paquets dans l'environnement de développement (npm).
+4. Créer l'application Next.js, la connexion par email et la création d'entreprise.
+5. Écrans paramètres, clients, dossiers.
+6. PDF (reprise de la logique existante) et export Excel.
+7. Tests d'isolation et de calcul (voir `SPEC.md`).
+8. Essai avec le frère de l'utilisateur, puis 2 à 3 garages.
+9. V2 : PayDunya, rappels, expiration.
 
 ## Jalons
 | Jalon | Contenu | Date cible |

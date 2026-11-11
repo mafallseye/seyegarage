@@ -1,12 +1,13 @@
 # CLAUDE.md : consignes pour travailler sur SeyeGarage
 
 Plateforme web de facturation par abonnement pour garages, menuiseries et autres métiers au Sénégal. Domaine : seyegarage.com.
+Design : `DESIGN.md` (Terre & Soleil). Relecture : `REVUE.md`.
 Lire d'abord : `PRD.md` (quoi et pourquoi), `SPEC.md` (comment), `PILOTE.md` (où on en est), `SKILL.md` (règles métier des documents).
 
 ## Équipe
 - Développement : Maguette
-- Design : Safia
-- Relecture : Karim (toute modification passe par une branche et une pull request relue par lui)
+- Design : Safia (direction **Terre & Soleil**, brief dans `DESIGN.md`)
+- Relecture : Karim (toute modification passe par une branche et une pull request relue par lui ; il propose de meilleures versions, grille dans `REVUE.md`)
 
 ## Langue
 - Interface, messages d'erreur, documentation et commentaires : **français**.
