@@ -4,7 +4,8 @@ Plateforme web de facturation par abonnement pour garages, menuiseries et autres
 Design : `DESIGN.md` (Terre & Soleil). Relecture : `REVUE.md`.
 Lire d'abord : `PRD.md` (quoi et pourquoi), `SPEC.md` (comment), `PILOTE.md` (où on en est), `SKILL.md` (règles métier des documents).
 
-## Équipe
+## Équipe (trois agents IA)
+Consignes de chaque agent : `.claude/agents/`. Organisation et backlog : `DOSSIER_AGENTS.md`.
 - Développement : Maguette
 - Design : Safia (direction **Terre & Soleil**, brief dans `DESIGN.md`)
 - Relecture : Karim (toute modification passe par une branche et une pull request relue par lui ; il propose de meilleures versions, grille dans `REVUE.md`)

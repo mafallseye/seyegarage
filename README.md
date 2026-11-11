@@ -8,7 +8,7 @@ Plateforme de facturation par abonnement pour garages, menuiseries et autres mé
 - Paiement : PayDunya (Wave, Orange Money, carte)
 
 ## Équipe
-Développement : Maguette · Design : Safia · Relecture : Karim
+Trois agents IA : Maguette (développement), Safia (design), Karim (relecture). Voir `DOSSIER_AGENTS.md`.
 
 ## État
 - [x] Base de données PostgreSQL (Neon, Frankfurt) avec règles de sécurité (`db/001_schema.sql`), testé

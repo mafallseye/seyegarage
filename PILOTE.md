@@ -1,6 +1,6 @@
 # PILOTE : suivi du projet
 
-Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md` (relecture). Équipe : Maguette (développement), Safia (design), Karim (relecture).
+Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md` (relecture). Équipe : trois agents IA, Maguette (développement), Safia (design), Karim (relecture). Organisation et backlog dans `DOSSIER_AGENTS.md`.
 
 ## Où on en est
 | Brique | État |
@@ -11,6 +11,7 @@ Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md`
 | Documents projet (CLAUDE, PRD, SPEC, SKILL, PILOTE) | Rédigés, à relire par Karim |
 | Application Next.js | À construire |
 | Design « Terre & Soleil » (Safia) | Brief rédigé (`DESIGN.md`), maquettes à faire |
+| Dossier des agents (`DOSSIER_AGENTS.md`, `.claude/agents/`) | Rédigé : consignes, backlog de 14 tâches, messages de lancement |
 | Relecture (Karim) | Grille et premières remarques (`REVUE.md`), à traiter |
 | Connexion par email | À construire, service d'envoi à choisir |
 | PDF et export Excel | À construire |
