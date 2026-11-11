@@ -19,15 +19,14 @@ Mis à jour à chaque étape. Équipe : Maguette (développement), Safia (design
 ## Décisions prises
 - Base PostgreSQL sur **Neon** (pas Supabase, pas MongoDB, pas MySQL).
 - Frontend **Next.js**, mobile d'abord.
-- Paiement **PayDunya**, abonnement par entreprise, tarif de départ 10 000 F par mois.
+- Paiement **PayDunya**, abonnement par entreprise, tarif : 10 000 F par mois ou 100 000 F par an.
 - Connexion par email sans mot de passe.
-- Essai gratuit 14 jours ; abonnement expiré = lecture seule + export Excel.
+- Essai gratuit de 14 jours (confirmé) ; abonnement expiré = lecture seule + export Excel.
 - Thème PDF par défaut : classique.
 
 ## Questions ouvertes
 - Hostinger Cloud propose-t-il les applications Node.js ? (vérifier dans hPanel)
 - Service d'envoi d'emails : Resend, ou Neon Auth ?
-- Prix annuel exact et durée de l'essai à confirmer.
 - Stockage des logos.
 - Domaine seyegarage.com : que garde-t-on du site actuel ?
 - Mentions légales, conditions d'utilisation, politique de confidentialité à rédiger.

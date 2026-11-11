@@ -24,7 +24,7 @@ Un site simple, utilisable depuis un téléphone, où un artisan crée un dossie
 Paiement en ligne (V2), autres métiers et modèles PDF libres (V3), statistiques, application mobile native, comptabilité, stock.
 
 ## Version 2 : abonnement
-- Tarif de départ : **10 000 F par mois**, ou **annuel** avec réduction (à fixer, ex. 100 000 F).
+- Tarif de départ : **10 000 F par mois**, ou **100 000 F par an** (soit 2 mois offerts).
 - Paiement via **PayDunya**. Pas de prélèvement automatique (mobile money) : l'abonnement a une **date de fin**, avec rappels par email ou WhatsApp quelques jours avant.
 - Abonnement **par entreprise** : un compte avec deux entreprises paie deux abonnements.
 - À l'expiration : lecture seule + export Excel.
