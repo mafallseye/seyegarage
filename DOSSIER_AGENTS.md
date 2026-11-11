@@ -3,7 +3,7 @@
 Trois agents IA, trois rôles. Leurs consignes détaillées sont dans `.claude/agents/` (`maguette.md`, `safia.md`, `karim.md`). Ce dossier dit **qui fait quoi, dans quel ordre, et quand c'est terminé**.
 
 ## Documents que tous lisent d'abord
-`CLAUDE.md` (règles) · `PRD.md` (le produit) · `SPEC.md` (la technique) · `SKILL.md` (règles métier) · `DESIGN.md` (le design) · `REVUE.md` (la relecture) · `PILOTE.md` (l'avancement).
+`CLAUDE.md` (règles) · `reference/outil-actuel/` (le programme Python existant, référence du moteur PDF) · `PRD.md` (le produit) · `SPEC.md` (la technique) · `SKILL.md` (règles métier) · `DESIGN.md` (le design) · `REVUE.md` (la relecture) · `PILOTE.md` (l'avancement).
 
 ## Accès nécessaires
 | Ressource | Pour qui | État |
