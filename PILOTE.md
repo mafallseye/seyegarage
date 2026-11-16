@@ -7,12 +7,13 @@ Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md`
 |---|---|
 | Outil actuel Excel + Python (GIE SEYE & FRERES, Seye Motor) | En service chez le client |
 | Dépôt GitHub `mafallseye/seyegarage` (privé) | Créé |
-| Base Neon `seyegarage` (Frankfurt, offre gratuite) | Créée, schéma 001 appliqué |
+| Base Neon `seyegarage` (Frankfurt, offre gratuite) | Schémas 001 et 002 appliqués ; 83 tests passés sous les rôles `app` et `service` (`db/tests/002_isolation.sql`) |
+| Rôles `app` et `service` | Créés sans mot de passe : **à fixer par l'utilisateur** avant la tâche 4 (voir `db/LISEZ-MOI.md`) |
 | Documents projet (CLAUDE, PRD, SPEC, SKILL, PILOTE) | Rédigés, à relire par Karim |
 | Application Next.js | À construire |
 | Design « Terre & Soleil » (Safia) | Brief rédigé (`DESIGN.md`), maquettes à faire |
 | Dossier des agents (`DOSSIER_AGENTS.md`, `.claude/agents/`) | Rédigé : consignes, backlog de 14 tâches, messages de lancement |
-| Relecture (Karim) | Grille et premières remarques (`REVUE.md`), à traiter |
+| Relecture (Karim) | Les 8 remarques de la première relecture sont traitées (migration 002, relue deux fois) |
 | Connexion par email | À construire, service d'envoi à choisir |
 | PDF et export Excel | À construire |
 | PayDunya | Compte marchand en cours d'ouverture, intégration en V2 |
@@ -34,9 +35,13 @@ Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md`
 - Stockage des logos.
 - Domaine seyegarage.com : que garde-t-on du site actuel ?
 - Mentions légales, conditions d'utilisation, politique de confidentialité à rédiger.
+- **Essai gratuit : un seul par compte, ou un par entreprise ?** Aujourd'hui chaque nouvelle entreprise reçoit 14 jours : un compte peut recréer son garage toutes les deux semaines et ne jamais payer. À trancher par l'utilisateur avant l'ouverture aux garages test.
+- Numéro automatique des dossiers : la forme `2026-001` convient-elle ? (utilisateur)
+- Le numéro d'un dossier mis à la corbeille redevient disponible : d'accord ? (utilisateur)
+- Total d'une ligne à quantité décimale arrondi au franc (1,5 × 333 = 500 F) : d'accord ? (utilisateur)
 
 ## Prochaines étapes
-1. Traiter les 8 remarques de `REVUE.md` (en premier : rôle de connexion sans contournement de la RLS, quantités décimales).
+1. Donner un mot de passe aux rôles `app` et `service` dans l'éditeur SQL de Neon (utilisateur).
 2. Safia livre la planche de style et les maquettes mobiles.
 3. Autoriser l'installation de paquets dans l'environnement de développement (npm).
 4. Créer l'application Next.js, la connexion par email et la création d'entreprise.
@@ -57,3 +62,4 @@ Mis à jour à chaque étape. Documents liés : `DESIGN.md` (design), `REVUE.md`
 
 ## Journal
 - 2026-11-11 : choix de la stack, création du dépôt et de la base Neon, schéma appliqué et testé (isolation entre entreprises, lecture seule après expiration, activation d'abonnement idempotente).
+- 2026-11-16 : tâche 1 (Maguette, relue deux fois par Karim). Migration `002_durcissement` appliquée sur Neon : rôles `app` et `service` sans contournement de la RLS, table `utilisateurs`, quantités décimales, corbeille et journal, numérotation automatique, `tarifs`, `rappels`, droits de modification par colonne. 83 tests passés sur Neon sous les rôles `app` et `service`. La première relecture avait trouvé un défaut bloquant (numérotation bloquée au 1000ᵉ dossier), corrigé avant application. Une branche Neon `test-migration-002`, créée pour un essai et non utilisée, peut être supprimée.

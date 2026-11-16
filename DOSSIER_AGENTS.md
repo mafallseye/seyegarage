@@ -9,7 +9,7 @@ Trois agents IA, trois rôles. Leurs consignes détaillées sont dans `.claude/a
 | Ressource | Pour qui | État |
 |---|---|---|
 | Dépôt GitHub `mafallseye/seyegarage` (privé) | Les trois | Créé |
-| Base Neon `seyegarage` (Frankfurt) | Maguette, Karim (lecture) | Créée, schéma 001 appliqué |
+| Base Neon `seyegarage` (Frankfurt) | Maguette, Karim (lecture) | Schémas 001 et 002 appliqués ; mots de passe des rôles `app` et `service` à fixer par l'utilisateur |
 | Installation de paquets (npm) dans l'environnement | Maguette | **À autoriser** (réglage du compte Claude) |
 | Compte marchand PayDunya, clés de test | Maguette (V2) | En cours d'ouverture ; clés dans les paramètres secrets de l'hébergeur, jamais dans le dépôt |
 | Service d'envoi d'emails | Maguette | À choisir (Resend ou Neon Auth) |
