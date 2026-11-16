@@ -43,7 +43,7 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   white-space: nowrap;
 }
 .montant--fort { font-weight: var(--graisse-fort); font-size: var(--taille-moyen); }
-.montant .devise { font-size: 0.8em; font-weight: var(--graisse-normal); color: var(--couleur-texte-secondaire); }
+.montant .devise { font-size: var(--taille-petit); font-weight: var(--graisse-normal); color: var(--couleur-texte-secondaire); }
 
 /* ---------- Boutons ---------- */
 .bouton {
@@ -51,7 +51,7 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   align-items: center;
   justify-content: center;
   gap: var(--espace-2);
-  min-height: 48px;                    /* au-dessus du minimum tactile de 44 px */
+  min-height: var(--hauteur-controle);  /* 48 px, au-dessus du minimum tactile de 44 px */
   padding: 0 var(--espace-5);
   border: 2px solid transparent;
   border-radius: var(--rayon-bouton);
@@ -63,7 +63,6 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   cursor: pointer;
   transition: background-color 0.15s, transform 0.05s;
 }
-.bouton:hover { background: var(--couleur-primaire-appui); }
 .bouton:active { background: var(--couleur-primaire-appui); transform: translateY(1px); }
 .bouton--large { width: 100%; }
 
@@ -72,19 +71,36 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   color: var(--couleur-texte);
   border-color: var(--couleur-bordure-champ);
 }
-.bouton--secondaire:hover, .bouton--secondaire:active { background: var(--couleur-surface-soutenue); }
+.bouton--secondaire:active { background: var(--couleur-surface-soutenue); }
 
 .bouton--discret {
   background: transparent;
   color: var(--couleur-lien);
   padding: 0 var(--espace-3);
 }
-.bouton--discret:hover, .bouton--discret:active { background: var(--couleur-surface-soutenue); }
+.bouton--discret:active { background: var(--couleur-surface-soutenue); }
 
-.bouton--danger { background: var(--couleur-erreur); }
-.bouton--danger:hover, .bouton--danger:active { background: var(--couleur-erreur-texte); }
+/* Danger : en contour, pour ne jamais le confondre avec le bouton principal (un seul bouton plein par écran). */
+.bouton--danger {
+  background: var(--couleur-surface);
+  color: var(--couleur-erreur-texte);
+  border-color: var(--couleur-erreur-texte);
+}
+.bouton--danger:active { background: var(--couleur-erreur-fond); }
+/* Plein brique : réservé à la confirmation finale d'une suppression, seul bouton plein de sa fenêtre. */
+.bouton--danger-plein { background: var(--couleur-erreur); }
+.bouton--danger-plein:active { background: var(--couleur-erreur-appui); }
 
-.bouton[disabled], .bouton[aria-disabled="true"] {
+/* Le survol n'existe que là où il y a une souris : sur téléphone il resterait « collé » après le toucher. */
+@media (hover: hover) {
+  .bouton:hover { background: var(--couleur-primaire-appui); }
+  .bouton--secondaire:hover, .bouton--discret:hover { background: var(--couleur-surface-soutenue); }
+  .bouton--danger:hover { background: var(--couleur-erreur-fond); }
+  .bouton--danger-plein:hover { background: var(--couleur-erreur-appui); }
+  .ligne:hover { background: var(--couleur-surface-soutenue); }
+}
+
+.bouton[disabled], .bouton[aria-disabled="true"]:not([aria-busy="true"]) {
   background: var(--couleur-surface-soutenue);
   color: var(--couleur-texte-secondaire);
   border-color: transparent;
@@ -92,6 +108,7 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
 }
 
 /* Bouton en attente : le libellé reste lisible, un anneau tourne à gauche */
+.bouton[aria-busy="true"] { pointer-events: none; }      /* pas de second appui pendant l'envoi */
 .bouton[aria-busy="true"]::before {
   content: "";
   width: 18px; height: 18px;
@@ -111,7 +128,7 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
 
 .champ input, .champ select, .champ textarea {
   width: 100%;
-  min-height: 48px;
+  min-height: var(--hauteur-controle);
   padding: var(--espace-3) var(--espace-4);
   border: 1.5px solid var(--couleur-bordure-champ);
   border-radius: var(--rayon-champ);
@@ -127,7 +144,7 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
 }
 .champ input:disabled { background: var(--couleur-surface-soutenue); color: var(--couleur-texte-secondaire); }
 
-.champ--erreur input, .champ--erreur select, .champ--erreur textarea { border-color: var(--couleur-erreur); border-width: 2px; }
+.champ--erreur input, .champ--erreur select, .champ--erreur textarea { border-color: var(--couleur-erreur-texte); border-width: 2px; }
 .champ .erreur {
   display: flex; gap: var(--espace-2); align-items: flex-start;
   font-size: var(--taille-petit);
@@ -174,9 +191,11 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   color: var(--couleur-texte);
   font-size: var(--taille-petit);
   font-weight: var(--graisse-fort);
-  white-space: nowrap;
+  max-width: 100%;                     /* un libellé long passe à la ligne au lieu de pousser l'écran */
+  padding-block: 4px;
+  border-radius: 14px;
 }
-.pastille::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pastille::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .pastille--succes { background: var(--couleur-succes-fond); color: var(--couleur-succes-texte); }
 .pastille--attention { background: var(--couleur-accent); color: var(--couleur-sur-accent); }
 .pastille--erreur { background: var(--couleur-erreur-fond); color: var(--couleur-erreur-texte); }
@@ -194,10 +213,12 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
 .message--erreur { background: var(--couleur-erreur-fond); border-left-color: var(--couleur-erreur); }
 .message strong { display: block; }
 
-/* ---------- Ligne de liste (dossier, client) : toute la ligne se touche ---------- */
+/* ---------- Ligne de liste (dossier, client) : toute la ligne se touche ----------
+   Le nom prend toute la largeur et n'est jamais coupé ; dessous, le détail à gauche, le montant et l'état à droite.
+   Chaque fragment du détail (numéro, date, plaque) est dans un <span> : il ne se coupe pas au milieu. */
 .ligne {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 2px var(--espace-3);
   align-items: center;
   min-height: 64px;
@@ -207,9 +228,12 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
   border-bottom: 1px solid var(--couleur-bordure);
 }
 .ligne:last-child { border-bottom: 0; }
-.ligne:hover, .ligne:active { background: var(--couleur-surface-soutenue); }
-.ligne .titre { font-weight: var(--graisse-fort); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ligne .detail { font-size: var(--taille-petit); color: var(--couleur-texte-secondaire); }
+.ligne:active { background: var(--couleur-surface-soutenue); }
+.ligne .titre { grid-column: 1 / -1; font-weight: var(--graisse-fort); overflow-wrap: anywhere; }
+.ligne .detail { grid-column: 1; grid-row: 2 / span 2; font-size: var(--taille-petit); color: var(--couleur-texte-secondaire); }
+.ligne .detail span { white-space: nowrap; }
+.ligne .montant { grid-column: 2; grid-row: 2; justify-self: end; }
+.ligne .pastille { grid-column: 2; grid-row: 3; justify-self: end; }
 
 /* ---------- Motif en bandeau (dessin original, inspiré du bogolan) : jamais derrière du texte ---------- */
 .motif {
@@ -221,14 +245,14 @@ a { color: var(--couleur-lien); text-underline-offset: 3px; }
 }
 .motif--discret { background: var(--couleur-bordure); }
 
-/* ---------- Chargement : silhouettes, sans texte ---------- */
+/* ---------- Chargement : silhouettes, toujours accompagnées d'un texte (« Chargement de vos dossiers… », role="status") ---------- */
 .squelette {
   border-radius: 6px;
-  background: var(--couleur-surface-soutenue);
+  background: color-mix(in srgb, var(--couleur-texte-secondaire) 30%, var(--couleur-surface));
   min-height: 16px;
   animation: respirer 1.4s ease-in-out infinite;
 }
-@keyframes respirer { 50% { opacity: 0.45; } }
+@keyframes respirer { 50% { opacity: 0.6; } }
 
 /* ---------- État vide ---------- */
 .vide { display: grid; gap: var(--espace-3); justify-items: center; text-align: center; padding: var(--espace-6) var(--espace-4); }

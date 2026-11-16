@@ -19,6 +19,7 @@
   --couleur-succes-fond: #E6EFE2;
   --couleur-erreur: #B3261E;
   --couleur-erreur-texte: #9C1F18;
+  --couleur-erreur-appui: #9C1F18;
   --couleur-erreur-fond: #FBE6E3;
   --couleur-lien: #A63F22;
   --couleur-focus: #3B2418;
@@ -51,6 +52,7 @@
   --ombre-carte: 0 1px 2px rgba(59, 36, 24, 0.06), 0 4px 12px rgba(59, 36, 24, 0.08);
   --ombre-flottant: 0 2px 6px rgba(59, 36, 24, 0.10), 0 12px 28px rgba(59, 36, 24, 0.16);
   --tactile: 44px;
+  --hauteur-controle: 48px;
   --largeur-mobile: 360px;
   --largeur-contenu: 640px;
   --largeur-bureau: 1080px;
@@ -78,6 +80,7 @@
     --couleur-succes-fond: #23331F;
     --couleur-erreur: #B3261E;
     --couleur-erreur-texte: #F5A49C;
+    --couleur-erreur-appui: #9C1F18;
     --couleur-erreur-fond: #45201B;
     --couleur-lien: #F2A93B;
     --couleur-focus: #F2A93B;
@@ -103,6 +106,7 @@
   --couleur-succes-fond: #23331F;
   --couleur-erreur: #B3261E;
   --couleur-erreur-texte: #F5A49C;
+  --couleur-erreur-appui: #9C1F18;
   --couleur-erreur-fond: #45201B;
   --couleur-lien: #F2A93B;
   --couleur-focus: #F2A93B;

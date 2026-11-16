@@ -33,7 +33,7 @@ const vars = (objet, prefixe) => Object.entries(objet).map(([nom, valeur]) => ` 
 const autres = [
   ...vars(j.police, 'police'), ...vars(j.taille, 'taille'), ...vars(j.interligne, 'interligne'),
   ...vars(j.graisse, 'graisse'), ...vars(j.espace, 'espace'), ...vars(j.rayon, 'rayon'),
-  ...vars(j.ombre, 'ombre'), `  --tactile: ${j.tactile};`, ...vars(j.largeur, 'largeur'),
+  ...vars(j.ombre, 'ombre'), `  --tactile: ${j.tactile};`, `  --hauteur-controle: ${j['hauteur-controle']};`, ...vars(j.largeur, 'largeur'),
 ];
 const sombre = vars(j.couleur.sombre, 'couleur');
 const css = `/* ${j.nom} : jetons de design. Fichier fabriqué par jetons.mjs à partir de tokens.json : ne pas le modifier à la main. */
