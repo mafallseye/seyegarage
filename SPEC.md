@@ -13,7 +13,7 @@ Schéma dans `db/` (`001_schema.sql` puis `002_durcissement.sql`, mode d'emploi 
 
 Points clés :
 - `dossiers (entreprise_id, numero)` est unique parmi les dossiers non supprimés. Numéro laissé vide : la base attribue `AAAA-NNN` par entreprise et par année ; un numéro saisi est gardé tel quel.
-- Un dossier ne s'efface pas : `supprime_le` le met à la corbeille, d'où il peut être rétabli. Le `journal` garde l'état d'avant chaque modification ou suppression (clients, dossiers, lignes, versements).
+- Un dossier ne s'efface pas : `supprime_le` le met à la corbeille, d'où il peut être rétabli. Le `journal` garde l'état d'avant chaque modification ou suppression (clients, dossiers, lignes, versements ; pas les paramètres de l'entreprise).
 - `lignes.qte` vide = main d'œuvre ou forfait (le total de la ligne vaut le prix unitaire). Quantités à deux décimales ; total de ligne arrondi au franc.
 - Une ligne, un versement ou le client d'un dossier appartiennent forcément à la même entreprise que le dossier (clés étrangères composées).
 - `tarifs` (plan, montant, depuis) porte le prix des abonnements ; `rappels` note chaque rappel d'expiration envoyé.

@@ -29,9 +29,18 @@ Ne pas créer ces rôles depuis la console Neon : un rôle créé là reçoit le
 - Dossier créé sans `numero` : la base attribue `AAAA-NNN` (2026-001). Un numéro saisi est gardé tel quel.
 - Supprimer un dossier = `update dossiers set supprime_le = now()`. Le rétablir = remettre `supprime_le` à `null`. Les listes filtrent sur `supprime_le is null`.
 - Lire le prix d'un abonnement avec `tarif_en_vigueur('mensuel')`, jamais en dur dans le code.
+- Limiter la saisie des quantités à deux décimales : la base arrondit le reste sans prévenir (1,005 devient 1,01).
+- `dossier_totaux` donne les totaux **avant marge**. Le reste à payer et le titre « Facture acquittée » d'un dossier avec marge se calculent côté serveur à partir du total avec marge (tâche 6), pas avec cette vue.
+
+## Limites connues, à traiter plus tard
+- **Paiement et rappels (V2, migration suivante)** : aujourd'hui ni `app` ni `service` ne peuvent créer une ligne dans `paiements`, et `service` ne lit pas les abonnements qui arrivent à échéance. Il faudra une fonction `creer_paiement(entreprise, plan)` ouverte à `app` (montant pris dans `tarifs`) et une lecture des échéances pour `service`. Ne jamais contourner ce manque avec le rôle propriétaire.
+- **Compteur de numéros** : un numéro saisi par erreur (`2026-5000`) fait repartir la suite de 5001 jusqu'à la fin de l'année. Le remettre en ordre demande pour l'instant le rôle propriétaire (table `compteurs_dossiers`).
+- **Journal** : il couvre clients, dossiers, lignes et versements, pas les paramètres de l'entreprise (compte bancaire, NINEA).
+- **Essai gratuit** : chaque nouvelle entreprise reçoit 14 jours, sans limite par compte (décision en attente, voir `PILOTE.md`).
+- **Suppression d'un compte** : impossible tant que le compte a créé une entreprise.
 
 ## Tests
 ```bash
 psql "$URL_PROPRIETAIRE" -v ON_ERROR_STOP=1 -f db/tests/002_isolation.sql
 ```
-64 cas joués sous les rôles `app` et `service` (cloisonnement, lecture seule après expiration, numérotation, corbeille, journal, paiement confirmé une seule fois). Les tests n'écrivent rien de durable : tout est annulé à la fin.
+80 cas joués sous les rôles `app` et `service` (cloisonnement, lecture seule après expiration, numérotation, corbeille, journal, paiement confirmé une seule fois). Les tests n'écrivent rien de durable : tout est annulé à la fin.

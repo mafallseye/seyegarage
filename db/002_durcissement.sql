@@ -31,6 +31,11 @@ begin
     end if;
     execute format('alter role %I login noinherit nobypassrls nocreatedb nocreaterole', r);
   end loop;
+  -- un rôle créé depuis la console Neon appartient à un groupe qui contourne la RLS : on refuse
+  if exists (select 1 from pg_auth_members am join pg_roles r on r.oid = am.member
+             where r.rolname in ('app', 'service')) then
+    raise exception 'Les rôles app et service ne doivent appartenir à aucun autre rôle';
+  end if;
 end $$;
 
 -- Par défaut PostgreSQL laisse tout le monde exécuter les fonctions : on ferme, puis on ouvre au cas par cas.
@@ -173,13 +178,17 @@ create function public.numeroter_dossier() returns trigger
 language plpgsql security definer set search_path = public as $$
 declare a integer := extract(year from coalesce(new.date, current_date)); n integer;
 begin
+  -- un dossier naît maintenant, hors de la corbeille, quoi qu'envoie le site
+  new.cree_le := now();
+  new.supprime_le := null;
+  new.supprime_par := null;
   new.numero := btrim(new.numero);
   if coalesce(new.numero, '') = '' then
     loop
       insert into public.compteurs_dossiers as c (entreprise_id, annee, dernier) values (new.entreprise_id, a, 1)
         on conflict (entreprise_id, annee) do update set dernier = c.dernier + 1
         returning c.dernier into n;
-      new.numero := a || '-' || lpad(n::text, 3, '0');
+      new.numero := a || '-' || lpad(n::text, greatest(3, length(n::text)), '0');   -- 001 … 999, 1000
       exit when not exists (select 1 from public.dossiers
                             where entreprise_id = new.entreprise_id and numero = new.numero and supprime_le is null);
     end loop;
@@ -192,6 +201,7 @@ begin
 end $$;
 create trigger trg_numeroter_dossier before insert on public.dossiers
   for each row execute function public.numeroter_dossier();
+alter table public.dossiers add constraint dossiers_numero_non_vide check (btrim(numero) <> '');
 
 -- ============ Vue : totaux d'un dossier (avant marge) ============
 -- Chaque ligne est arrondie au franc (1,5 × 333 = 500 F), puis les lignes sont additionnées.
@@ -238,11 +248,19 @@ create policy rap_service on public.rappels for all to service using (true) with
 grant usage on schema public to app, service;
 
 -- le site
-grant select, insert, update on public.entreprises to app;
+grant select, insert on public.entreprises to app;
+-- modification : tout sauf l'identifiant, l'auteur et la date de création
+grant update (nom, activite, slogan, adresse, tel, email, web, ninea, rc, rc_label, compte, banque,
+  conditions_defaut, mode_defaut, mentions, theme, logo_path, marge_defaut, marge_sur_facture)
+  on public.entreprises to app;
 grant select on public.utilisateurs, public.membres, public.abonnements, public.paiements,
                 public.tarifs, public.journal, public.dossier_totaux to app;
 grant select, insert, update, delete on public.clients, public.lignes, public.versements to app;
-grant select, insert, update on public.dossiers to app;      -- pas de suppression définitive
+grant select, insert on public.dossiers to app;              -- pas de suppression définitive
+-- modification : ni l'identifiant, ni l'entreprise, ni la date de création, ni l'auteur de la mise à la corbeille
+grant update (numero, date, client_id, client_nom, client_adresse, client_code, marque, type, immat, km, marge_pct,
+  generer_facture, date_echeance, conditions, mode, numero_br, ref_commande, incoterm, lieu, bon_commande, supprime_le)
+  on public.dossiers to app;
 grant execute on function public.app_uid(), public.est_membre(uuid), public.abonnement_actif(uuid),
   public.peut_ecrire(uuid), public.utilisateur_par_email(text), public.tarif_en_vigueur(text, date) to app;
 
