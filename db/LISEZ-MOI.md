@@ -43,4 +43,4 @@ Ne pas créer ces rôles depuis la console Neon : un rôle créé là reçoit le
 ```bash
 psql "$URL_PROPRIETAIRE" -v ON_ERROR_STOP=1 -f db/tests/002_isolation.sql
 ```
-80 cas joués sous les rôles `app` et `service` (cloisonnement, lecture seule après expiration, numérotation, corbeille, journal, paiement confirmé une seule fois). Les tests n'écrivent rien de durable : tout est annulé à la fin.
+83 cas joués sous les rôles `app` et `service` (cloisonnement, lecture seule après expiration, numérotation, corbeille, journal, paiement confirmé une seule fois). Les tests n'écrivent rien de durable : tout est annulé à la fin.

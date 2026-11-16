@@ -201,7 +201,7 @@ begin
 end $$;
 create trigger trg_numeroter_dossier before insert on public.dossiers
   for each row execute function public.numeroter_dossier();
-alter table public.dossiers add constraint dossiers_numero_non_vide check (btrim(numero) <> '');
+alter table public.dossiers add constraint dossiers_numero_net check (numero <> '' and numero = btrim(numero));
 
 -- ============ Vue : totaux d'un dossier (avant marge) ============
 -- Chaque ligne est arrondie au franc (1,5 × 333 = 500 F), puis les lignes sont additionnées.
@@ -248,14 +248,19 @@ create policy rap_service on public.rappels for all to service using (true) with
 grant usage on schema public to app, service;
 
 -- le site
-grant select, insert on public.entreprises to app;
--- modification : tout sauf l'identifiant, l'auteur et la date de création
+grant select on public.entreprises to app;
+-- création et modification : ni l'auteur ni la date de création ne se choisissent
+grant insert (id, nom, activite, slogan, adresse, tel, email, web, ninea, rc, rc_label, compte, banque,
+  conditions_defaut, mode_defaut, mentions, theme, logo_path, marge_defaut, marge_sur_facture)
+  on public.entreprises to app;
 grant update (nom, activite, slogan, adresse, tel, email, web, ninea, rc, rc_label, compte, banque,
   conditions_defaut, mode_defaut, mentions, theme, logo_path, marge_defaut, marge_sur_facture)
   on public.entreprises to app;
 grant select on public.utilisateurs, public.membres, public.abonnements, public.paiements,
                 public.tarifs, public.journal, public.dossier_totaux to app;
-grant select, insert, update, delete on public.clients, public.lignes, public.versements to app;
+grant select, insert, delete on public.clients to app;
+grant update (nom, code, adresse, tel) on public.clients to app;
+grant select, insert, update, delete on public.lignes, public.versements to app;
 grant select, insert on public.dossiers to app;              -- pas de suppression définitive
 -- modification : ni l'identifiant, ni l'entreprise, ni la date de création, ni l'auteur de la mise à la corbeille
 grant update (numero, date, client_id, client_nom, client_adresse, client_code, marque, type, immat, km, marge_pct,
