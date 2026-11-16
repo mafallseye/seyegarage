@@ -31,7 +31,8 @@ Consignes de chaque agent : `.claude/agents/`. Organisation et backlog : `DOSSIE
 
 ## Commandes (à compléter quand l'application existe)
 - `npm run dev`, `npm run build`, `npm run lint`, `npm test`
-- Migrations : appliquer les fichiers de `db/` dans l'ordre sur la branche Neon voulue.
+- Migrations : appliquer les fichiers de `db/` dans l'ordre sur la branche Neon voulue (voir `db/LISEZ-MOI.md`).
+- Tests de la base : `psql "$URL_PROPRIETAIRE" -v ON_ERROR_STOP=1 -f db/tests/002_isolation.sql` (rien n'est conservé).
 
 ## Conventions
 - Branches : `feat/…`, `fix/…`. Commits courts en français à l'impératif.
