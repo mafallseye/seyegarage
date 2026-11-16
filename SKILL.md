@@ -26,7 +26,7 @@ Plus : un PDF « dossier complet » qui les réunit.
 ## Lignes
 - Quantité vide, espace ou tiret = main d'œuvre ou forfait : total de ligne = prix.
 - Prix vide ou tiret = 0.
-- Quantité non entière : arrondie à l'entier (à revoir si les décimales deviennent nécessaires).
+- Quantité décimale acceptée, deux décimales au plus (1,5 m ; 0,5 L). Le total de la ligne est arrondi au franc (1,5 × 333 = 500 F).
 - Limites par page : 23 lignes (facture, pro forma), 22 (bon de réception).
 - Une ligne sans désignation mais avec un montant déclenche une alerte.
 

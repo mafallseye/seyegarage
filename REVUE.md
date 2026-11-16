@@ -29,6 +29,8 @@ Rôle de Karim : relire chaque modification et **proposer une meilleure version*
 - [ ] Les questions ouvertes sont listées avec une personne responsable.
 
 ## Première relecture : points relevés sur l'existant
+Suite donnée le 16/11/2026 : points 1 à 7 traités par la migration `db/002_durcissement.sql` ; point 8 inscrit dans `SPEC.md` et à vérifier à la tâche 7 (moteur PDF).
+
 | # | Point | Pourquoi | Proposition |
 |---|---|---|---|
 | 1 | La base est créée avec le rôle propriétaire de Neon, qui **contourne la RLS** | Le cloisonnement ne protégerait rien si l'application se connecte avec ce rôle | Créer un rôle `app` sans droit de contournement, donner les droits strictement nécessaires, et n'utiliser que lui dans l'application (migration `002`) |

@@ -9,19 +9,22 @@
 - **PayDunya** : création de facture de paiement côté serveur, redirection du client, confirmation par rappel serveur (IPN) puis vérification auprès de l'API avant activation.
 
 ## Données
-Schéma complet dans `db/001_schema.sql`. Tables : `entreprises`, `membres`, `abonnements`, `paiements`, `clients`, `dossiers`, `lignes`, `versements`, vue `dossier_totaux`.
+Schéma dans `db/` (`001_schema.sql` puis `002_durcissement.sql`, mode d'emploi dans `db/LISEZ-MOI.md`). Tables : `utilisateurs`, `entreprises`, `membres`, `abonnements`, `paiements`, `tarifs`, `rappels`, `clients`, `dossiers`, `lignes`, `versements`, `journal`, `compteurs_dossiers`, vue `dossier_totaux`.
 
 Points clés :
-- `dossiers (entreprise_id, numero)` est unique.
-- `lignes.qte` vide = main d'œuvre ou forfait (le total de la ligne vaut le prix unitaire).
+- `dossiers (entreprise_id, numero)` est unique parmi les dossiers non supprimés. Numéro laissé vide : la base attribue `AAAA-NNN` par entreprise et par année ; un numéro saisi est gardé tel quel.
+- Un dossier ne s'efface pas : `supprime_le` le met à la corbeille, d'où il peut être rétabli. Le `journal` garde l'état d'avant chaque modification ou suppression (clients, dossiers, lignes, versements ; pas les paramètres de l'entreprise).
+- `lignes.qte` vide = main d'œuvre ou forfait (le total de la ligne vaut le prix unitaire). Quantités à deux décimales ; total de ligne arrondi au franc.
+- Une ligne, un versement ou le client d'un dossier appartiennent forcément à la même entreprise que le dossier (clés étrangères composées).
+- `tarifs` (plan, montant, depuis) porte le prix des abonnements ; `rappels` note chaque rappel d'expiration envoyé.
 - `dossiers.marge_pct` vide = aucune marge.
-- `membres` relie un utilisateur à une entreprise (`proprietaire` ou `employe`).
+- `utilisateurs` : un compte par email. `membres` relie un utilisateur à une entreprise (`proprietaire` ou `employe`).
 - Un abonnement `essai` de 14 jours est créé par un déclencheur à la création d'une entreprise.
 
 ## Sécurité
 - Connexion : code à usage unique envoyé par email, durée courte, limite de tentatives. Session par cookie `httpOnly`, `secure`, `sameSite=lax`.
 - À chaque requête authentifiée, ouvrir une transaction et exécuter `select set_config('app.user_id', '<uuid>', true)`. Les règles RLS font le reste.
-- Le rôle de connexion de l'application ne doit ni être propriétaire des tables ni avoir `BYPASSRLS`. Un second rôle, réservé au serveur de paiement, appelle `activer_abonnement`.
+- L'application se connecte avec le rôle `app`, qui ne possède aucune table et n'a pas `BYPASSRLS`. Un second rôle, `service`, réservé au serveur (paiement, rappels), appelle `activer_abonnement` et n'a aucun accès aux données de travail. Le rôle propriétaire ne sert qu'aux migrations et aux tests.
 - Webhook PayDunya : ne jamais se fier au contenu reçu ; relire l'état du paiement chez PayDunya avant d'activer.
 - Limiter le débit (connexion, génération de PDF, export).
 - Sauvegardes : points de restauration Neon + export Excel par l'utilisateur.
@@ -51,6 +54,6 @@ Points clés :
 
 ## Tests obligatoires avant mise en ligne
 - Calculs : marges (5, 5 %, 0,05 → 5 % ; vide → aucune), totaux, reste à payer, « acquittée ».
-- Limites : 23 lignes pour facture et pro forma, 22 pour le bon de réception (pagination ou refus clair).
-- Isolation : un utilisateur B ne lit ni n'écrit rien chez A ; écriture refusée si abonnement expiré, lecture permise.
+- Limites : 23 lignes pour facture et pro forma, 22 pour le bon de réception (pagination ou refus clair), vérifiées pour chacun des trois thèmes (classique, eco, charte).
+- Isolation : un utilisateur B ne lit ni n'écrit rien chez A ; écriture refusée si abonnement expiré, lecture permise. Tests joués sous le rôle `app` : `db/tests/002_isolation.sql`.
 - Paiement : double confirmation du même paiement = un seul abonnement ; prolongation à partir de la fin en cours.
