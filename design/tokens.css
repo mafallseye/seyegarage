@@ -1,0 +1,109 @@
+/* Terre & Soleil : jetons de design. Fichier fabriqué par jetons.mjs à partir de tokens.json : ne pas le modifier à la main. */
+:root {
+  color-scheme: light;
+  --couleur-texte: #3B2418;
+  --couleur-texte-secondaire: #7A5C48;
+  --couleur-primaire: #A63F22;
+  --couleur-primaire-appui: #8C331A;
+  --couleur-sur-primaire: #FFFFFF;
+  --couleur-accent: #F2A93B;
+  --couleur-accent-fond: #FDEFD3;
+  --couleur-sur-accent: #3B2418;
+  --couleur-fond: #FBF4E8;
+  --couleur-surface: #FFFFFF;
+  --couleur-surface-soutenue: #F6E3C5;
+  --couleur-bordure: #E8D9C0;
+  --couleur-bordure-champ: #9A7B60;
+  --couleur-succes: #4F7B4A;
+  --couleur-succes-texte: #345C31;
+  --couleur-succes-fond: #E6EFE2;
+  --couleur-erreur: #B3261E;
+  --couleur-erreur-texte: #9C1F18;
+  --couleur-erreur-fond: #FBE6E3;
+  --couleur-lien: #A63F22;
+  --couleur-focus: #3B2418;
+  --police-titre: Fraunces, Georgia, 'Times New Roman', serif;
+  --police-texte: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --taille-petit: 14px;
+  --taille-texte: 16px;
+  --taille-moyen: 18px;
+  --taille-titre-3: 20px;
+  --taille-titre-2: 24px;
+  --taille-titre-1: 30px;
+  --taille-vitrine: 38px;
+  --interligne-titre: 1.15;
+  --interligne-texte: 1.5;
+  --graisse-normal: 400;
+  --graisse-moyen: 500;
+  --graisse-fort: 600;
+  --graisse-titre: 600;
+  --espace-1: 4px;
+  --espace-2: 8px;
+  --espace-3: 12px;
+  --espace-4: 16px;
+  --espace-5: 24px;
+  --espace-6: 32px;
+  --espace-7: 48px;
+  --rayon-champ: 10px;
+  --rayon-bouton: 10px;
+  --rayon-carte: 12px;
+  --rayon-pastille: 999px;
+  --ombre-carte: 0 1px 2px rgba(59, 36, 24, 0.06), 0 4px 12px rgba(59, 36, 24, 0.08);
+  --ombre-flottant: 0 2px 6px rgba(59, 36, 24, 0.10), 0 12px 28px rgba(59, 36, 24, 0.16);
+  --tactile: 44px;
+  --largeur-mobile: 360px;
+  --largeur-contenu: 640px;
+  --largeur-bureau: 1080px;
+}
+
+/* Mode sombre : suit le réglage du téléphone, ou forcé avec data-theme="sombre" (data-theme="clair" force le clair). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="clair"]) {
+    color-scheme: dark;
+    --couleur-texte: #FBF4E8;
+    --couleur-texte-secondaire: #D9C3AB;
+    --couleur-primaire: #A63F22;
+    --couleur-primaire-appui: #8C331A;
+    --couleur-sur-primaire: #FFFFFF;
+    --couleur-accent: #F2A93B;
+    --couleur-accent-fond: #4A3413;
+    --couleur-sur-accent: #3B2418;
+    --couleur-fond: #1E120B;
+    --couleur-surface: #2B1A10;
+    --couleur-surface-soutenue: #3A2518;
+    --couleur-bordure: #4A3325;
+    --couleur-bordure-champ: #A08368;
+    --couleur-succes: #4F7B4A;
+    --couleur-succes-texte: #A9D3A3;
+    --couleur-succes-fond: #23331F;
+    --couleur-erreur: #B3261E;
+    --couleur-erreur-texte: #F5A49C;
+    --couleur-erreur-fond: #45201B;
+    --couleur-lien: #F2A93B;
+    --couleur-focus: #F2A93B;
+  }
+}
+:root[data-theme="sombre"] {
+  color-scheme: dark;
+  --couleur-texte: #FBF4E8;
+  --couleur-texte-secondaire: #D9C3AB;
+  --couleur-primaire: #A63F22;
+  --couleur-primaire-appui: #8C331A;
+  --couleur-sur-primaire: #FFFFFF;
+  --couleur-accent: #F2A93B;
+  --couleur-accent-fond: #4A3413;
+  --couleur-sur-accent: #3B2418;
+  --couleur-fond: #1E120B;
+  --couleur-surface: #2B1A10;
+  --couleur-surface-soutenue: #3A2518;
+  --couleur-bordure: #4A3325;
+  --couleur-bordure-champ: #A08368;
+  --couleur-succes: #4F7B4A;
+  --couleur-succes-texte: #A9D3A3;
+  --couleur-succes-fond: #23331F;
+  --couleur-erreur: #B3261E;
+  --couleur-erreur-texte: #F5A49C;
+  --couleur-erreur-fond: #45201B;
+  --couleur-lien: #F2A93B;
+  --couleur-focus: #F2A93B;
+}
