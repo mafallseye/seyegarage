@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/banner.png" alt="SeyeGarage — Facturation par abonnement pour garages et artisans au Sénégal" width="100%"></p>
+
 # SeyeGarage
 
 Plateforme de facturation par abonnement pour garages, menuiseries et autres métiers (Sénégal).
